@@ -8,6 +8,7 @@
 
 import Foundation
 
+public typealias JSONDictionary = [String: Any]
 
 /**
  * MQTT Message
@@ -41,6 +42,17 @@ open class CocoaMQTTMessage: NSObject {
         self.qos = qos
         self.retained = retained
         self.dup = dup
+    }
+  
+    public init?(topic: String, json: JSONDictionary, qos: CocoaMQTTQOS = .qos1, retained: Bool = false, dup: Bool = false) {
+      guard let data = try? JSONSerialization.data(withJSONObject: json, options: .prettyPrinted) else {
+        return nil
+      }
+      self.topic = topic
+      self.payload = [UInt8](data)
+      self.qos = qos
+      self.retained = retained
+      self.dup = dup
     }
 }
 

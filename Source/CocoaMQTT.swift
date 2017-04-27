@@ -274,6 +274,16 @@ open class CocoaMQTT: NSObject, CocoaMQTTClient, CocoaMQTTFrameBufferProtocol {
         let message = CocoaMQTTMessage(topic: topic, string: string, qos: qos, retained: retained, dup: dup)
         return publish(message)
     }
+  
+  
+    @discardableResult
+    open func publish(_ topic: String, withJSON json: JSONDictionary, qos: CocoaMQTTQOS = .qos1, retained: Bool = false, dup: Bool = false) -> UInt16 {
+      guard let message = CocoaMQTTMessage(topic: topic, json: json, qos: qos, retained: retained, dup: dup) else {
+        return 0
+      }
+      return publish(message)
+    }
+  
 
     @discardableResult
     open func publish(_ message: CocoaMQTTMessage) -> UInt16 {
