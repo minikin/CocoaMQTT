@@ -29,7 +29,7 @@ open class CocoaMQTTMessage: NSObject {
     }
   
     // utf8 bytes array to JSONDictionary
-    var toJSON: JSONDictionary? {
+    public var toJSON: JSONDictionary? {
       get {
         guard let json = try? JSONSerialization.jsonObject(with: Data(payload), options: [.mutableContainers, .allowFragments]) as? JSONDictionary else {
           return nil
@@ -37,7 +37,6 @@ open class CocoaMQTTMessage: NSObject {
         return json
       }
     }
-  
   
     public init(topic: String, string: String, qos: CocoaMQTTQOS = .qos1, retained: Bool = false, dup: Bool = false) {
         self.topic = topic
