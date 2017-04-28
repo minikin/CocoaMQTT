@@ -27,7 +27,18 @@ open class CocoaMQTTMessage: NSObject {
             return NSString(bytes: payload, length: payload.count, encoding: String.Encoding.utf8.rawValue) as String?
         }
     }
-    
+  
+    // utf8 bytes array to JSONDictionary
+    var toJSON: JSONDictionary? {
+      get {
+        guard let json = try? JSONSerialization.jsonObject(with: Data(payload), options: [.mutableContainers, .allowFragments]) as? JSONDictionary else {
+          return nil
+        }
+        return json
+      }
+    }
+  
+  
     public init(topic: String, string: String, qos: CocoaMQTTQOS = .qos1, retained: Bool = false, dup: Bool = false) {
         self.topic = topic
         self.payload = [UInt8](string.utf8)
