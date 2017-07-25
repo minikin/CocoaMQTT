@@ -14,7 +14,7 @@ public typealias JSONDictionary = [String: Any]
  * MQTT Message
  */
 open class CocoaMQTTMessage: NSObject {
-    var qos = CocoaMQTTQOS.qos1
+    open var qos = CocoaMQTTQOS.qos1
     var dup = false
 
     open var topic: String
